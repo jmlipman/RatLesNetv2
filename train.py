@@ -19,7 +19,7 @@ parser.add_argument("--validation", dest="validation", default=-1)
 # Output folder
 parser.add_argument("--output", dest="output", default=-1)
 # Load training data into memory
-parser.add_argument("--loadMemory", dest="loadMemory", default=-1)
+parser.add_argument("--loadMemory", dest="loadMemory", default="-1")
 # GPU. For CPU only use -1
 parser.add_argument("--gpu", dest="gpu", default=0)
 args = parser.parse_args()
@@ -81,7 +81,7 @@ os.makedirs(outputPath)
 
 # Training Configuration
 lr = 1e-4
-epochs = 300
+epochs = 10
 batch = 1
 initW = he_normal
 initB = torch.nn.init.zeros_
@@ -118,6 +118,7 @@ keep_training = True # Flag to stop training
 print(now() + "Start training")
 for e in range(epochs):
 
+    # Train
     model.train()
     tr_loss = 0
     for tr_i in range(len(train_data)):
@@ -138,23 +139,27 @@ for e in range(epochs):
         tr_loss = str(tr_loss.cpu().detach().numpy())
         f.write(tr_loss+"\n")
 
-    model.eval()
-    val_loss = 0
-    with torch.no_grad():
-        for val_i in range(len(val_data)):
-            X, Y, id_ = val_data[val_i]
+    # Validation
+    val_loss = ""
+    if len(val_data) > 0:
+        model.eval()
+        val_loss = 0
+        with torch.no_grad():
+            for val_i in range(len(val_data)):
+                X, Y, id_ = val_data[val_i]
 
-            output = model(X)
-            pred = output[0]
-            val_loss += CrossEntropyDiceLoss(pred, Y)
+                output = model(X)
+                pred = output[0]
+                val_loss += CrossEntropyDiceLoss(pred, Y)
 
-    val_loss /= len(val_data)
+        val_loss /= len(val_data)
 
-    with open(outputPath+"validation_loss", "a") as f:
-        val_loss = str(val_loss.cpu().numpy())
-        f.write(val_loss+"\n")
+        with open(outputPath+"validation_loss", "a") as f:
+            val_loss = str(val_loss.cpu().numpy())
+            f.write(val_loss+"\n")
+            val_loss = "Val Loss: "+str(val_loss)
 
-    print(now() + "Epoch: {}. Loss: {}. Val Loss: {}".format(e, tr_loss, val_loss))
+    print(now() + "Epoch: {}. Loss: {}. ".format(e, tr_loss) + val_loss)
 
     e += 1
 
