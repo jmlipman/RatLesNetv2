@@ -1,8 +1,9 @@
 RatLesNetv2
 ======================
 
-IMG of the Network
-IMG of our data.
+Repository of the paper "RatLesNetv2: A Fully Convolutional Network for Rodent Brain Lesion Segmentation"
+
+![Architecture](architecture.png "RatLesNetv2 Architecture")
 
 ### Table of Contents
 * [1. Introduction](#1-introduction)
@@ -12,16 +13,15 @@ IMG of our data.
   * [2.3. Image format](#23-image-format)
   * [2.4. Setup](#24-setup)
 * [3. Training and Evaluation](#3-training-and-evaluation)
-  * [3.1. Training](#31-trainig)
+  * [3.1. Training](#31-training)
   * [3.2. Evaluation](#32-evaluation)
-* [4. Architecture](#4-architecture)
-* [5. License](#5-license)
-* [6. Citation](#6-citation)
+* [4. License](#4-license)
+* [5. Citation](#5-citation)
 
 ### 1. Introduction
 RatLesNetv2 is a convolutional neural network implemented in Python+Pytorch to segment rodent brain lesions. The code of RatLesNetv2 is simplified to make it readable and accessible to a wide audience.
 
-### 2. Installation
+### 2. Installation and Requirements
 
 #### 2.1 Requirements
  * [Python](https://www.python.org/downloads/) (preferably version 3). Programming language of RatLesNetv2.
