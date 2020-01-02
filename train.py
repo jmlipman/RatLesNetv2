@@ -81,7 +81,7 @@ os.makedirs(outputPath)
 
 # Training Configuration
 lr = 1e-4
-epochs = 10
+epochs = 10 # Originally 700
 batch = 1
 initW = he_normal
 initB = torch.nn.init.zeros_

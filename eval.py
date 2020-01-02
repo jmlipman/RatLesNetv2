@@ -98,7 +98,7 @@ with torch.no_grad():
         if removeSmallIslands_thr != -1:
             pred = removeSmallIslands(pred, thr=removeSmallIslands_thr)
 
-        if type(Y) != None:
+        if type(Y) != type(None):
             Y = Y.cpu().numpy()
             with open(outputPath + "stats.csv", "a") as f:
                 measures = Metric(pred, Y)
