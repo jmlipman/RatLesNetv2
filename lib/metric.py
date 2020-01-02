@@ -6,15 +6,7 @@ def _border_np(y):
     """Calculates the border of a 3D binary map.
        From NiftyNet.
     """
-    west = ndimage.shift(y, [-1, 0, 0], order=0)
-    east = ndimage.shift(y, [1, 0, 0], order=0)
-    north = ndimage.shift(y, [0, 1, 0], order=0)
-    south = ndimage.shift(y, [0, -1, 0], order=0)
-    top = ndimage.shift(y, [0, 0, 1], order=0)
-    bottom = ndimage.shift(y, [0, 0, -1], order=0)
-    cumulative = west + east + north + south + top + bottom
-    border = ((cumulative < 6) * y) == 1
-    return border
+    return y - ndimage.binary_erosion(y)
 
 def _border_distance(y_pred, y_true):
     """Distance between two borders.
@@ -67,19 +59,6 @@ class Metric:
                 results[i, c] = result
         return results
 
-    def islands(self):
-        """Returns the number of islands i.e. independently connected components.
-
-           Args:
-           `y`: output from the network, B2WHD
-        """
-        num_samples = self.y_pred.shape[0]
-        results = np.zeros(num_samples)
-        for i in range(num_samples):
-            # NOTE: I will leave this like this but ideally I would count every channel.
-            results[i] = np.max(measure.label(np.argmax(self.y_pred[i], axis=0)))
-        return results
-
     def hausdorff_distance(self):
         """Hausdorff distance.
            From NiftyNet.
@@ -96,3 +75,14 @@ class Metric:
 
         return results
 
+    def compactness(self):
+        """surface^1.5 / volume
+        """
+        num_samples = self.y_pred.shape[0]
+        results = np.zeros(num_samples)
+        for i in range(num_samples):
+            pred = np.argmax(self.y_pred[i], axis=0)
+            surface = np.sum(_border_np(pred))
+            volume = np.sum(pred)
+            results[i] = (surface**1.5)/volume
+        return results
