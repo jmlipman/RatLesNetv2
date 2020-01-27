@@ -47,7 +47,7 @@ class DataWrapper:
         self.loadMemory = loadMemory
 
         self.scanName = "scan.nii.gz"
-        self.labelName = "scan_lesion.nii.gz"
+        self.labelName = "scan_lesionIAM.nii.gz"
 
         self.list = []
         for root, subdirs, files in os.walk(path):
@@ -98,8 +98,13 @@ class DataWrapper:
         target = self.list[idx]
         X = nib.load(target + self.scanName).get_data()
         X = (X-X.mean())/X.std() # 0-mean 1-std normalization
-        X = np.moveaxis(X, -1, 0) # Move channels to the first axis.
-        X = np.moveaxis(X, -1, 1) # Move "depth" to the second axis.
+        X = np.moveaxis(X, -1, 0) # Move channels or depth to the first axis.
+        if len(X.shape) == 3: # Original image dimensions were HWD (no modality/channel)
+            X = np.expand_dims(X, axis=0) # CDHW format, where C is 1.
+        elif len(X.shape) == 4: # ORiginal image dimensions were HWDC
+            X = np.moveaxis(X, -1, 1) # Move "depth" to the second axis.
+        else:
+            raise Exception("Image `"+target + self.scanName+"` have too many dimensions: "+str(X.shape))
         X = np.expand_dims(X, axis=0) # BCDHW format
         X = np2cuda(X, self.dev)
 

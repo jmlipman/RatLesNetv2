@@ -18,9 +18,12 @@ Repository of the paper "RatLesNetv2: A Fully Convolutional Network for Rodent B
   * [3.2. Evaluation](#32-evaluation)
 * [4. License](#4-license)
 * [5. Citation](#5-citation)
+* [6. Contact](#6-contact)
 
 ### 1. Introduction
-RatLesNetv2 is a convolutional neural network implemented in Python+Pytorch to segment rodent brain lesions. The code of RatLesNetv2 is simplified to make it readable and accessible to a wide audience. This implementation of RatLesNetv2 allows combining the output of several trained models with majority voting for improved results and post-processing the results by removing small independently connected components (holes and islands).
+RatLesNetv2 is a convolutional neural network implemented in Python+Pytorch to segment rodent brain lesions. The code of RatLesNetv2 is simplified to make it readable and accessible to a wide audience.
+
+This implementation of RatLesNetv2 allows combining several models trained separately. This script will generate a prediction per model and a prediction combined with majority voting. Post-processing, i.e. removing small independently connected components (holes and islands) is also available.
 
 #### 1.1 Files
 
@@ -91,7 +94,7 @@ Arguments within \[brackets\] are optional.
 ```cshell
 python train.py --input DIR --output DIR [--validation DIR --loadMemory -1 --gpu X]
 # Example
-python train.py --input ~/data/in/MRI_Training_Data --output ~/data/out/segResults --validation ~/data/in/MRI_Validation_Data --loadMemory 1
+python train.py --input ~/data/in/MRI_Training_Data --output ~/data/out/Trained_Models --validation ~/data/in/MRI_Validation_Data --loadMemory 1
 ```
 
 * --input: Path containing all the subfolders of the data used for training/optimizing the network. Check [2.3. Image format](#23-image-format) to see the expected path structure.
@@ -110,6 +113,10 @@ Arguments within \[brackets\] are optional.
 
 ```cshell
 python eval.py --input DIR --output DIR --model FILE [--gpu X]
+# Example (evaluating with 1 model)
+python eval.py --input ~/data/in/MRI_Testing_Data --output ~/data/out/Segmentation_Results --model ~/data/out/Trained_Models/1/RatLesNetv2.model [--gpu X]
+# Example (evaluating with multiple models)
+python eval.py --input ~/data/in/MRI_Testing_Data --output ~/data/out/Segmentation_Results --model ~/data/out/Trained_Models/*/RatLesNetv2.model [--gpu X]
 ```
 
 * --input: Path containing all the subfolders of the scans that RatLesNetv2 will segment. Check [2.3. Image format](#23-image-format) to see the expected path structure.
@@ -136,4 +143,8 @@ removeSmallIslands_thr = 20
 [MIT License](LICENSE)
 
 ### 5. Citation
-(Not published yet) "RatLesNetv2: A Fully Convolutional Network for Rodent Brain Lesion Segmentation"
+"RatLesNetv2: A Fully Convolutional Network for Rodent Brain Lesion Segmentation"
+Pre-print available: https://arxiv.org/abs/2001.09138
+
+### 6. Contact
+Feel free to write an email with questions or feedback about RatLesNetv2 at **juanmiguel.valverde@uef.com**

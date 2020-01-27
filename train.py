@@ -81,7 +81,7 @@ os.makedirs(outputPath)
 
 # Training Configuration
 lr = 1e-4
-epochs = 10 # Originally 700
+epochs = 100 # Originally 700
 batch = 1
 initW = he_normal
 initB = torch.nn.init.zeros_
@@ -91,9 +91,6 @@ opt = torch.optim.Adam
 # Architecture
 filters = 32
 modalities = 1
-
-# POST-PROCESSING
-#config["config.removeSmallIslands_thr"] = 20 # Remove independent connected components. Use 20. If not, -1
 
 ### Loading Weights
 #config["config.model_state"] = "/home/miguelv/data/out/Lesion/Journal/3-ablation/level2_sameparams_mixed/2/model/model-699"

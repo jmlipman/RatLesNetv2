@@ -96,7 +96,7 @@ for i, m in enumerate(args.model):
     model.load_state_dict(torch.load(m))
 
     model.eval()
-    print(now() + "Start generating masks")
+    print(now() + "Start generating masks (model " + str(i+1) + ")")
     with torch.no_grad():
         for te_i in range(len(test_data)):
             if te_i % 10 == 0:
