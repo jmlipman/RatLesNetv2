@@ -1,7 +1,7 @@
 RatLesNetv2
 ======================
 
-Repository of the paper "RatLesNetv2: A Fully Convolutional Network for Rodent Brain Lesion Segmentation".
+Repository of the paper [RatLesNetv2: A Fully Convolutional Network for Rodent Brain Lesion Segmentation](https://www.frontiersin.org/articles/10.3389/fnins.2020.610239/full).
 
 ![Architecture](architecture.png "RatLesNetv2 Architecture")
 
@@ -143,8 +143,19 @@ removeSmallIslands_thr = 20
 [MIT License](LICENSE)
 
 ### 5. Citation
-"RatLesNetv2: A Fully Convolutional Network for Rodent Brain Lesion Segmentation"
-Pre-print available: https://arxiv.org/abs/2001.09138
+```
+@article{10.3389/fnins.2020.610239,
+author={Valverde, Juan Miguel and Shatillo, Artem and De Feo, Riccardo and Gröhn, Olli and Sierra, Alejandra and Tohka, Jussi},
+title={RatLesNetv2: A Fully Convolutional Network for Rodent Brain Lesion Segmentation},
+journal={Frontiers in Neuroscience},
+volume={14},
+pages={1333},
+year={2020},
+URL={https://www.frontiersin.org/article/10.3389/fnins.2020.610239},
+DOI={10.3389/fnins.2020.610239},
+ISSN={1662-453X},   
+}
+```
 
 ### 6. Contact
-Feel free to write an email with questions or feedback about RatLesNetv2 at **juanmiguel.valverde@uef.com**
+Feel free to write an email with questions or feedback about RatLesNetv2 at **juanmiguel.valverde@uef.fi**
